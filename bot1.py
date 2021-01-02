@@ -15,9 +15,10 @@ def welcome(message):
 def lalala(message):
     bot.send_message(
         message.chat.id,
-        "{0.first_name},\nя этим не занимаюсь, но ты можешь спрашивать...".format
+        "{0.first_name}, ты вот пишешь: {1}\nя этим не занимаюсь, но ты можешь спрашивать...".format
             (
             message.from_user,
+            message.text,
             bot.get_me()
             ),
             parse_mode='html')
