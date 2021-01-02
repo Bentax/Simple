@@ -1,16 +1,40 @@
-# This is a sample Python script.
+from telegram import Bot
+from telegram import Update
+from telegram.ext import Updater
+from telegram.ext import MessageHandler
+from telegram.ext import Filters
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+TG_TOKEN ="1423318538:AAF2GgBfNEEwNtHuzrlI9sLyxgV1awmB5hI"
 
+def message_handler(bot: Bot, update: Update):
+    user = update.effective_user
+    if user:
+        name = user.first_name
+    else:
+        name = 'anonim'
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    text = update.effective_message.text
+    reply_text = f'Hello, {name}!\n\n{text}'
 
+    bot.send_message(
+        chat_id=update.effective_message.chat_id,
+        text=reply_text,
+    )
 
-# Press the green button in the gutter to run the script.
+def main():
+    print('Start')
+    bot = Bot(
+        token=TG_TOKEN,
+        #base_url="https://telegg.ru/PizzaAnswerBot",
+    )
+    updater = Updater(bot=bot, use_context=True)
+
+    handler=MessageHandler(Filters.all, message_handler)
+    updater.dispatcher.add_handler(handler)
+
+    updater.start_polling()
+    updater.idle()
+    print('Finish')
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
