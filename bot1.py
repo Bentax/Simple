@@ -13,7 +13,14 @@ def welcome(message):
 
 @bot.message_handler(content_types=['text'])
 def lalala(message):
-    bot.send_message(message.chat.id, message.text)
+    bot.send_message(
+        message.chat.id,
+        "{0.first_name},\nя этим не занимаюсь, но ты можешь спрашивать...".format
+            (
+            message.from_user,
+            bot.get_me()
+            ),
+            parse_mode='html')
 
 # RUN
 bot.polling(none_stop=True)
